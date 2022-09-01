@@ -1,0 +1,27 @@
+{
+  "name": "api-bulk-processing",
+  "version": "1.0.0",
+  "author": {
+    "name": "Serge Artishev",
+    "email": "serge.artishev@fusion5.co.nz"
+  },
+  "description": "Sample API bulk processing console app. Executes API requests by batches of N requests in parallel and shows progress",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.21.4",
+    "cli-progress": "^3.11.2",
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.1",
+    "@types/node": "^16.10.2",
+    "jest": "^28.1.1",
+    "ts-jest": "^28.0.4",
+    "typescript": "^4.0.0"
+  }
+}
