@@ -18,14 +18,30 @@ const runBatch = async (values: string[], params: {}) => {
   return res;
 };
 
-const run = async (options: { parallel: Boolean; size: number; concurrency: number; waitMills: number; showProgress: Boolean; flushToFile: string }) => {
-  const raw = readFileSync(join(process.cwd(), '.data/contacts.json'), 'utf8');
-  const contactList: string[] = JSON.parse(raw)
-    .map((v) => v.contactId)
-    .slice(0, 50);
+const run = async (options: {
+  parallel: Boolean;
+  size: number;
+  concurrency: number;
+  waitMills: number;
+  showProgress: Boolean;
+  flushToFile: string;
+}) => {
+  // const raw = readFileSync(join(process.cwd(), '.data/contacts.json'), 'utf8');
+  const raw = readFileSync(join(process.cwd(), `.data/InvitationCodeContactIds.test.json`), 'utf8');
+  const contactList: string[] = JSON.parse(raw).map((v) => v.contactId);
+  // .slice(0, 50);
 
   const res = await Utils.execute(contactList, runBatch, {}, options);
-  writeFileSync(join(process.cwd(), '.data/contacts.out.json'), JSON.stringify(res, null, 2));
+  writeFileSync(join(process.cwd(), '.data/InvitationCodeContactIds.out.json'), JSON.stringify(res, null, 2));
 };
 
-run({ parallel: true, size: 10, concurrency: 10, waitMills: 1000, showProgress: true, flushToFile: `.data/out/contacts.{batchNo}.json` }).then().catch(console.error);
+run({
+  parallel: true,
+  size: 90,
+  concurrency: 30,
+  waitMills: 1000,
+  showProgress: true,
+  flushToFile: `.data/out/InvitationCodeContactIds.{batchNo}.json`,
+})
+  .then()
+  .catch(console.error);
