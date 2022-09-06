@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IConfiguration } from '../../config/IConfiguration';
+import { Utils } from '../../helpers';
 
 export class CrmClient {
   private connectionInstance: AxiosInstance;
@@ -23,6 +24,12 @@ export class CrmClient {
         return response;
       },
       async (error: AxiosError) => {
+        if (error.response?.status === 429) {
+          console.log(`Too many requests.. waiting 10 seconds...`);
+          Utils.sleep(10000);
+          const originalRequest: AxiosRequestConfig = error.config;
+          return this.connectionInstance.request(originalRequest);
+        }
         if (error.response?.data['message']) {
           return Promise.reject(new Error(error.response?.data['message']));
         }
